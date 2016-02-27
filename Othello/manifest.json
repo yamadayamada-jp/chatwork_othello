@@ -10,6 +10,11 @@
   },
   "content_scripts": [{
     "matches": ["https://www.chatwork.com/*"],
-    "js": ["js/jquery-2.2.1.min.js", "js/othello.js"]
+    "js": [
+      "js/jquery-2.2.1.min.js",
+      "js/board.js",
+      "js/chatwork.js",
+      "js/othello.js"
+    ]
   }]
 }
