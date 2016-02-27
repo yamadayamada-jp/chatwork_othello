@@ -146,7 +146,7 @@ class Othello {
     constructor () {
         this.button_id = 'othello';
         this.chatWork = new ChatWork();
-        this.grid = new Board();
+        this.board = new Board();
     }
 
     start () {
