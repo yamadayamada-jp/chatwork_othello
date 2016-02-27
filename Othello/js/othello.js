@@ -63,7 +63,8 @@ class Board {
             throw new TypeError(`Cannot set (x:${x}, y:${y})`)
         }
 
-        const reversed = (blackOrWhite === 1 ? 2 : 1)
+
+        const reversed = (blackOrWhite === Board.BLACK ? Board.WHITE : Board.BLACK)
 
         const diffs = this.getOmnidirection();
         const changeCoords = diffs.reduce((memo, diff) => {
@@ -96,7 +97,7 @@ class Board {
         // 置こうとしているセルが空でない
         if (this.get(x, y) !== 0) return false;
 
-        const reversed = (blackOrWhite === 1 ? 2 : 1)
+        const reversed = (blackOrWhite === Board.BLACK ? Board.WHITE : Board.BLACK)
         return diffs.some((diff) => {
             const nextY = y + diff[0];
             const nextX = x + diff[1];
@@ -177,10 +178,12 @@ class Board {
 
     getStatusString () {
         const status = this.getStatus();
-        console.log(status);
-        return `黒:${status[1]}、白:${status[2]}、@:${status[0]}手`;
+        return `黒:${status[Board.BLACK]}、白:${status[Board.WHITE]}、@:${status[Board.NONE]}手`;
     }
 }
+Board.NONE = 0;
+Board.BLACK = 1;
+Board.WHITE = 2;
 
 class Othello {
     constructor () {
