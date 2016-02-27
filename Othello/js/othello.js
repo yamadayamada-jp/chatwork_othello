@@ -53,22 +53,24 @@ class Othello {
     }
 }
 
-var ChatWork = function(){
-    this.send = function(message){
+
+class ChatWork {
+
+    send (message){
         if(!this.isToOrReplyMessage($("#_chatText").val())){
             alert('相手を選択して下さい');
             return false;
         }
         $("#_chatText").val($("#_chatText").val() + message);
         $("#_sendButton").trigger('click');
-    };
+    }
 
     /**
      * メッセージ入力欄にTO、もしくは返信に該当する文字列があるかチェックする。
      *
      * @return bool
      */
-    this.isToOrReplyMessage = function(now_messeage){
+    isToOrReplyMessage (now_messeage){
         if(now_messeage.indexOf('[To:') !== -1 || now_messeage.indexOf('[返信')  !== -1){
             return true;
         } else {
@@ -76,20 +78,13 @@ var ChatWork = function(){
         }
     }
 
-    /**
-     * 最新のメッセージIDを取得する
-     */
-     this.getMostNewMesseageID = function(){
+    getMostNewMesseageID (){
         return $('#_messageIdEnd').prev().data('mid');
-     };
+    }
 
-    /**
-     * Re付きメッセージのIDを渡すと、Reを返した先のメッセージのIDを取得する
-     */
-    this.getReplyMessageID = function(id){
+    getReplyMessageID (id){
         return $('#_messageId'+id).find('.chatTimeLineReply').data('mid');
-    };
-
+    }
 };
 
 $(document).ready(function(){
