@@ -192,6 +192,10 @@ class Othello {
     start () {
         this.chatWork.send(`[code]${this.board.toString()}[/code]`);
     }
+
+    reply () {
+        console.log('Reply');
+    }
 }
 
 
@@ -233,7 +237,6 @@ class ChatWork {
         var start_board_value = '┌';
         var end_board_value = '┘';
         return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘$/);
-
     }
 
     getMostNewMesseageID (){
@@ -253,5 +256,13 @@ $(document).ready(function(){
 
     $("#"+othello.button_id).on('click', function() {
         othello.start();
+    });
+
+    // 対局テストの為に暫定的に返すボタンを設置する。
+    // このままではUIがイケてないので後で直す。
+    var othello_return_button_li = '<li id="othello_return" role="button" class="_showDescription icoFont" aria-label="チャットワークオセロ" style="font-size:13px;">[オセロ返信]</li>';
+    $('#_chatSendTool').append(othello_return_button_li);
+    $("#othello_return").on('click', function() {
+        othello.reply();
     });
 });
