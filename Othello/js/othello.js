@@ -1,16 +1,20 @@
 var Othello = function(){
-
-    this.button_id = 'othello';
+    var chatWork = new ChatWork();
 
     var board = '[code]┌───┬───┬───┬───┬───┬───┬───┬───┐\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n└───┴───┴───┴───┴───┴───┴───┴───┘[/code]';
 
-    this.start = function(){
-        this.insertTextArea(board);
-        $("#_sendButton").trigger('click');
-    };
+    this.button_id = 'othello';
 
-    this.insertTextArea = function(value){
-        $("#_chatText").val(value);
+    this.start = function(){
+        chatWork.send(board);
+    };
+};
+
+
+var ChatWork = function(){
+    this.send = function(message){
+        $("#_chatText").val(message);
+        $("#_sendButton").trigger('click');
     };
 };
 
