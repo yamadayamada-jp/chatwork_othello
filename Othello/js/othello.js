@@ -58,6 +58,21 @@ var ChatWork = function(){
         $("#_chatText").val($("#_chatText").val() + message);
         $("#_sendButton").trigger('click');
     };
+
+    /**
+     * 最新のメッセージIDを取得する
+     */
+     this.getMostNewMesseageID = function(){
+        return $('#_messageIdEnd').prev().data('mid');
+     };
+
+    /**
+     * Re付きメッセージのIDを渡すと、Reを返した先のメッセージのIDを取得する
+     */
+    this.getReplyMessageID = function(id){
+        return $('#_messageId'+id).find('.chatTimeLineReply').data('mid');
+    };
+
 };
 
 $(document).ready(function(){
