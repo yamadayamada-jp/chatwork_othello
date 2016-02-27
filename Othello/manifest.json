@@ -1,0 +1,15 @@
+{
+  "name": "chatwork_othello",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "play chatwork othello",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [{
+    "matches": ["https://www.chatwork.com/*"],
+    "js": ["js/jquery-2.2.1.min.js", "js/othello.js"]
+  }]
+}
