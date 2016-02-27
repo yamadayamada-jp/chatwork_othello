@@ -6,12 +6,12 @@ const wrap = (spacer) => (cell) => spacer + cell + spacer;
 class Othello {
     constructor () {
         this.button_id = 'othello';
+        this.chatWork = new ChatWork();
         this.grid = this.getGrid();
     }
 
     start () {
-        console.log('start');
-        console.log('[code]' + this.toBoard() + '[/code]');
+        this.chatWork.send(`[code]${this.toBoard()}[/code]`);
     }
 
     toCell (cell) {
@@ -33,7 +33,7 @@ class Othello {
             .map(wrap('\n'))
             .join(border);
 
-        return [header, content, footer].join("\n");
+        return header + content + footer;
     }
 
     getGrid () {
@@ -52,6 +52,13 @@ class Othello {
         ];
     }
 }
+
+var ChatWork = function(){
+    this.send = function(message){
+        $("#_chatText").val(message);
+        $("#_sendButton").trigger('click');
+    };
+};
 
 $(document).ready(function(){
     var othello = new Othello();
