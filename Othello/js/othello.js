@@ -78,6 +78,23 @@ class ChatWork {
         }
     }
 
+    /**
+     * メッセージIDからメッセージ本文を取得する
+     */
+    getMessage (id){
+        return $('#_messageId'+id).find('pre').text();
+    }
+
+    /**
+     * メッセージからオセロ盤のみを抽出する。
+     */
+    getOthelloBoardMessage(message){
+        var start_board_value = '┌';
+        var end_board_value = '┘';
+        return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘$/);
+
+    }
+
     getMostNewMesseageID (){
         return $('#_messageIdEnd').prev().data('mid');
     }
