@@ -1,7 +1,33 @@
 'use strict';
 
+// identity::String -> String -> String
+const identity = (thing) => thing
+
 // wrap::String -> String -> String
 const wrap = (spacer) => (cell) => spacer + cell + spacer;
+
+const groupBy = (list, predicate) => {
+    predicate = predicate || identity;
+
+    return list.reduce((memo, item) => {
+        const key = predicate(item);
+        if(typeof memo[key] === 'undefined') {
+            memo[key] = []
+        }
+
+        memo[key] = memo[key].concat([item]);
+        return memo
+    }, {})
+}
+
+const countBy = (list, predicate) => {
+    let groups = groupBy(list, predicate)
+    for (let p in groups) {
+        groups[p] = groups[p].length
+    }
+
+    return groups;
+}
 
 // 0:なし
 // 1:黒
@@ -138,7 +164,21 @@ class Board {
             .map(wrap('\n'))
             .join(border);
 
-        return header + content + footer;
+        return header + content + footer + "\n" + this.getStatusString();
+    }
+
+    flatten () {
+        return this.grid.reduce((memo, line) => memo.concat(line), []);
+    }
+
+    getStatus () {
+        return countBy(this.flatten());
+    }
+
+    getStatusString () {
+        const status = this.getStatus();
+        console.log(status);
+        return `黒:${status[1]}、白:${status[2]}、@:${status[0]}手`;
     }
 }
 
