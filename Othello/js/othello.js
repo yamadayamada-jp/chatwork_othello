@@ -1,12 +1,57 @@
-var Othello = function(){
+'use strict';
 
-    this.button_id = 'othello';
+// wrap::String -> String -> String
+const wrap = (spacer) => (cell) => spacer + cell + spacer;
 
-    this.start = function(){
+class Othello {
+    constructor () {
+        this.button_id = 'othello';
+        this.grid = this.getGrid();
+    }
+
+    start () {
         console.log('start');
-    };
-};
+        console.log('[code]' + this.toBoard() + '[/code]');
+    }
 
+    toCell (cell) {
+        return [' ', '●', '◯'][cell];
+    }
+
+    toBoard () {
+        const header = '┌───┬───┬───┬───┬───┬───┬───┬───┐';
+        const border = '├───┼───┼───┼───┼───┼───┼───┼───┤';
+        const footer = '└───┴───┴───┴───┴───┴───┴───┴───┘';
+        const separator = '│';
+
+        const content = this.grid.map((line) => {
+                return line.map(this.toCell)
+                    .map(wrap(' '))
+                    .join(separator);
+            })
+            .map(wrap(separator))
+            .map(wrap('\n'))
+            .join(border);
+
+        return [header, content, footer].join("\n");
+    }
+
+    getGrid () {
+        // 0: なし
+        // 1: 黒
+        // 2: 白
+        return [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 2, 0, 0, 0],
+            [0, 0, 0, 2, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+    }
+}
 
 $(document).ready(function(){
     var othello = new Othello();
