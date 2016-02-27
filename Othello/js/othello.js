@@ -1,15 +1,57 @@
-var Othello = function(){
-    var chatWork = new ChatWork();
+'use strict';
 
-    var board = '[code]┌───┬───┬───┬───┬───┬───┬───┬───┐\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │   │\n└───┴───┴───┴───┴───┴───┴───┴───┘[/code]';
+// wrap::String -> String -> String
+const wrap = (spacer) => (cell) => spacer + cell + spacer;
 
-    this.button_id = 'othello';
+class Othello {
+    constructor () {
+        this.button_id = 'othello';
+        this.chatWork = new ChatWork();
+        this.grid = this.getGrid();
+    }
 
-    this.start = function(){
-        chatWork.send(board);
-    };
-};
+    start () {
+        this.chatWork.send(`[code]${this.toBoard()}[/code]`);
+    }
 
+    toCell (cell) {
+        return [' ', '●', '◯'][cell];
+    }
+
+    toBoard () {
+        const header = '┌───┬───┬───┬───┬───┬───┬───┬───┐';
+        const border = '├───┼───┼───┼───┼───┼───┼───┼───┤';
+        const footer = '└───┴───┴───┴───┴───┴───┴───┴───┘';
+        const separator = '│';
+
+        const content = this.grid.map((line) => {
+                return line.map(this.toCell)
+                    .map(wrap(' '))
+                    .join(separator);
+            })
+            .map(wrap(separator))
+            .map(wrap('\n'))
+            .join(border);
+
+        return header + content + footer;
+    }
+
+    getGrid () {
+        // 0: なし
+        // 1: 黒
+        // 2: 白
+        return [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 2, 0, 0, 0],
+            [0, 0, 0, 2, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+    }
+}
 
 var ChatWork = function(){
     this.send = function(message){
@@ -17,7 +59,6 @@ var ChatWork = function(){
         $("#_sendButton").trigger('click');
     };
 };
-
 
 $(document).ready(function(){
     var othello = new Othello();
