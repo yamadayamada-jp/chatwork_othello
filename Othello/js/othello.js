@@ -55,7 +55,7 @@ class Othello {
 
 var ChatWork = function(){
     this.send = function(message){
-        $("#_chatText").val(message);
+        $("#_chatText").val($("#_chatText").val() + message);
         $("#_sendButton").trigger('click');
     };
 };
