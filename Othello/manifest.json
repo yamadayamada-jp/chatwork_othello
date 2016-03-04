@@ -9,7 +9,10 @@
     "128": "icons/icon128.png"
   },
   "content_scripts": [{
-    "matches": ["https://www.chatwork.com/*"],
+    "matches": [
+      "https://www.chatwork.com/*",
+      "https://kcw.kddi.ne.jp/*"
+    ],
     "js": [
       "js/jquery-2.2.1.min.js",
       "js/board.js",
