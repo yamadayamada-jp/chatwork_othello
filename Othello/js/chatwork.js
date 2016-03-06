@@ -31,12 +31,28 @@
 
     class ChatWork {
 
+        /**
+         * 現在チャット本文入力フォームに入力されているテキストを取得する
+         *
+         * @return string
+         */
+        getMessageByInput() {
+            return $("#_chatText").val();
+        }
+
+        /**
+         * 現在入力しているメッセージ+αを送信する。
+         * +αは引数で指定する。
+         *
+         * @param string message 追加で入力するメッセージ。
+         */
         send (message){
-            if(!this.isToOrReplyMessage($("#_chatText").val())){
+            var inputted_message = this.getMessageByInput();
+            if(!this.isToOrReplyMessage(inputted_message)){
                 alert('相手を選択して下さい');
                 return false;
             }
-            $("#_chatText").val($("#_chatText").val() + message);
+            $("#_chatText").val(inputted_message + message);
             $("#_sendButton").trigger('click');
         }
 
@@ -55,8 +71,11 @@
 
         /**
          * メッセージIDからメッセージ本文を取得する
+         *
+         * @param  string id メッセージIDの番号
+         * @return string
          */
-        getMessage (id){
+        getMessageById (id){
             return $('#_messageId'+id).find('pre').text();
         }
 
