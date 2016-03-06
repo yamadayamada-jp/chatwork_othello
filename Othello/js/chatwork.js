@@ -56,17 +56,10 @@
             $("#_sendButton").trigger('click');
         }
 
-        reply () {
-            var reply_board_string = this.getBoardAtReply();
-            // [TODO]本来ここでBoardのインスタンスを立てるべきではない（Othelloクラスで立てているのでそちらでやるべき）
-            // デバッグの為に一時的に置いているので、後ほど移動すること。
-            this.board = new Board();
-            var board_array = this.board.decodeStringGameBoard(reply_board_string);
-            console.log(board_array);
-        }
-
         /**
          * 返信ボタンを押した際に返信先の相手をチェックして、直前の盤面を文字列で取得する。
+         *
+         * @return string
          */
          getBoardAtReply (){
             var inputted_message = this.getMessageByInput();
