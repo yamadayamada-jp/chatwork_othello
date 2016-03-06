@@ -56,13 +56,10 @@
             $("#_sendButton").trigger('click');
         }
 
-        reply () {
-            var reply_board_string = this.getBoardAtReply();
-            console.log(reply_board_string);
-        }
-
         /**
          * 返信ボタンを押した際に返信先の相手をチェックして、直前の盤面を文字列で取得する。
+         *
+         * @return string
          */
          getBoardAtReply (){
             var inputted_message = this.getMessageByInput();
@@ -122,7 +119,8 @@
         getOthelloBoardMessage(message){
             var start_board_value = '┌';
             var end_board_value = '┘';
-            return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
+            var board = message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
+            return board[0];
         }
 
         getMostNewMesseageID (){

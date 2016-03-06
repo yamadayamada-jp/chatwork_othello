@@ -41,7 +41,9 @@
         }
 
         reply () {
-            this.chatWork.reply();
+            var reply_board_string = this.chatWork.getBoardAtReply();
+            var board_array = this.board.decodeStringGameBoard(reply_board_string);
+            console.log(board_array);
         }
     }
     global.Othello = Othello;
