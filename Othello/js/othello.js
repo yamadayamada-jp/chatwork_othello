@@ -42,6 +42,7 @@
 
         reply () {
             var reply_board_string = this.chatWork.getBoardAtReply();
+            if(!reply_board_string) return false;
             var board_array = this.board.decodeStringGameBoard(reply_board_string);
             console.log(board_array);
         }

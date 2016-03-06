@@ -59,7 +59,7 @@
         /**
          * 返信ボタンを押した際に返信先の相手をチェックして、直前の盤面を文字列で取得する。
          *
-         * @return string
+         * @return string|bool オセロ盤取得失敗時はfalse
          */
          getBoardAtReply (){
             var inputted_message = this.getMessageByInput();
@@ -115,11 +115,19 @@
 
         /**
          * メッセージからオセロ盤のみを抽出する。
+         *
+         * @param  string message
+         * @return string|bool オセロ盤取得失敗時はfalseを返却。同時にalertを表示する。
          */
         getOthelloBoardMessage(message){
             var start_board_value = '┌';
             var end_board_value = '┘';
             var board = message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
+            if(board === null){
+                alert('返信先からオセロ盤を取得出来ませんでした');
+                return;
+            }
+
             return board[0];
         }
 
