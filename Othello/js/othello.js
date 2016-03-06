@@ -41,7 +41,7 @@
         }
 
         reply () {
-            console.log('Reply');
+            this.chatWork.reply();
         }
     }
     global.Othello = Othello;

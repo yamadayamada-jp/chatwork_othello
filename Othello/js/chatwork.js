@@ -56,6 +56,25 @@
             $("#_sendButton").trigger('click');
         }
 
+        reply () {
+            var reply_board_string = this.getBoardAtReply();
+            console.log(reply_board_string);
+        }
+
+        /**
+         * 返信ボタンを押した際に返信先の相手をチェックして、直前の盤面を文字列で取得する。
+         */
+         getBoardAtReply (){
+            var inputted_message = this.getMessageByInput();
+            var re_id = this.getReplyMessageIdByMessage(inputted_message);
+            if(!re_id){
+                alert('相手を選択して下さい');
+                return false;
+            }
+            var re_message = this.getMessageById(re_id);
+            return this.getOthelloBoardMessage(re_message);
+         }
+
         /**
          * メッセージ入力欄にTO、もしくは返信に該当する文字列があるかチェックする。
          *
@@ -80,12 +99,30 @@
         }
 
         /**
+         * 取得したメッセージ中に返信先があるかどうか確認して、存在した場合返信先のメッセージIDを抽出する。
+         *
+         * @param  string message メッセージ本文
+         * @return string|bool    返信先ID取得失敗時はfalse
+         */
+         getReplyMessageIdByMessage (message){
+            if(message.indexOf('[返信')  === -1){
+                return false;
+            }
+            // 正規表現でmessageを走査。返信メッセージの場合、3番目の数字列が返信先ID
+            var in_message_num = message.match(/[\d]+/g);
+            if(typeof in_message_num[2] === undefined){
+                return false;
+            }
+            return in_message_num[2];
+         }
+
+        /**
          * メッセージからオセロ盤のみを抽出する。
          */
         getOthelloBoardMessage(message){
             var start_board_value = '┌';
             var end_board_value = '┘';
-            return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘$/);
+            return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
         }
 
         getMostNewMesseageID (){
