@@ -58,7 +58,11 @@
 
         reply () {
             var reply_board_string = this.getBoardAtReply();
-            console.log(reply_board_string);
+            // [TODO]本来ここでBoardのインスタンスを立てるべきではない（Othelloクラスで立てているのでそちらでやるべき）
+            // デバッグの為に一時的に置いているので、後ほど移動すること。
+            this.board = new Board();
+            var board_array = this.board.decodeStringGameBoard(reply_board_string);
+            console.log(board_array);
         }
 
         /**
@@ -122,7 +126,8 @@
         getOthelloBoardMessage(message){
             var start_board_value = '┌';
             var end_board_value = '┘';
-            return message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
+            var board = message.match(/┌[─┬┐│┼┤└┴◯●\s├]+┘/);
+            return board[0];
         }
 
         getMostNewMesseageID (){

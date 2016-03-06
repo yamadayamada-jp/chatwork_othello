@@ -169,6 +169,51 @@
             return header + content + footer + "\n" + this.getStatusString();
         }
 
+        /**
+         * 文字列で表現されたゲーム盤をパースしてゲームの進行状況を2次元配列で受け取る
+         */
+        decodeStringGameBoard (string_board){
+            const onPiece = ['', '●', '◯']
+
+            const header = '┌───┬───┬───┬───┬───┬───┬───┬───┐';
+            const border = '├───┼───┼───┼───┼───┼───┼───┼───┤';
+            const footer = '└───┴───┴───┴───┴───┴───┴───┴───┘';
+            const separator = '│';
+
+            var non_rim_board = string_board.replace(new RegExp(header+"\n", 'g'), '')
+            .replace(new RegExp(border+"\n", 'g'), '')
+            .replace(new RegExp(footer, 'g'), '');
+
+            // セパレーター区切りで文字を分解
+            // 文字列は空文字、スペース文字（石なし）、石（黒白2種類）、改行に分けられる。
+            // 空文字は必ず区切りの先頭にある。これは利用されない為、2次元配列成形時に取り除く。
+            // 改行は縦行の区切りをあわらす。配列を区切る際の文字列として利用する。
+            var non_rim_boards = non_rim_board.split(separator);
+            var col = [],
+                row = [],
+                col_idx = 0;
+            $.each(non_rim_boards, function(i, square) {
+                if(square === '') return true;
+                // 改行（行の末尾）まで来たら、行の情報を列に保存。
+                // 行情報をリセットして最後までリトライしつづける。
+                if(square === "\n"){
+                    col[col_idx] = row;
+                    row = [];
+                    col_idx ++;
+                    return true;
+                }
+                // [FIXME]本来は何らかの方法で両端をトリムすべき。
+                // スペース3つをスペース1つに上手くトリムする方法が見つからなかったので、
+                // 今回は空行を全て取り除くことでチェックする。
+                // 何かが残れば石があり、空文字になれば石がない。
+                var trim_square = square.replace(/\s/g, '');
+                var value = onPiece.indexOf(trim_square);
+                row.push(value);
+            });
+
+            return col;
+        }
+
         flatten () {
             return this.grid.reduce((memo, line) => memo.concat(line), []);
         }
