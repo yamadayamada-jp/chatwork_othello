@@ -31,6 +31,15 @@
 
     class ChatWork {
 
+        /**
+         * 現在チャット本文入力フォームに入力されているテキストを取得する
+         *
+         * @return string
+         */
+        getMessageByInput() {
+            return $("#_chatText").val();
+        }
+
         send (message){
             if(!this.isToOrReplyMessage($("#_chatText").val())){
                 alert('相手を選択して下さい');
@@ -55,8 +64,11 @@
 
         /**
          * メッセージIDからメッセージ本文を取得する
+         *
+         * @param  string id メッセージIDの番号
+         * @return string
          */
-        getMessage (id){
+        getMessageById (id){
             return $('#_messageId'+id).find('pre').text();
         }
 
